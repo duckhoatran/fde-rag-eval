@@ -206,7 +206,9 @@ def build() -> int:
 
         conn.executemany("INSERT OR REPLACE INTO chunks VALUES (?,?,?,?,?,?,?)", rows)
         conn.executemany(
-            "INSERT INTO chunks_fts (chunk_id, text) VALUES (?,?)", [(r[0], r[6]) for r in rows]
+            "INSERT INTO chunks_fts (chunk_id, text) VALUES (?,?)",
+            [(r[0], f"{r[3]}\n{r[6]}") for r in rows],  # heading is indexed too:
+            # "ANNEX III" must be findable, and it only lives in the heading.
         )
         conn.execute(
             "INSERT OR REPLACE INTO docs VALUES (?,?,?,?,?,?,?,?,?)",

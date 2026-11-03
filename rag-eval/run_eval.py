@@ -59,14 +59,14 @@ def corpus_stats() -> dict:
     return {"docs": docs, "chunks": chunks, "chars": chars}
 
 
-def evaluate(questions: list[dict]) -> dict:
+def evaluate(questions: list[dict], names: list[str] | None = None) -> dict:
     from retrieve import PIPELINES, search
 
     answerable = [q for q in questions if q.get("answerable", True)]
     results: dict[str, dict] = {}
     retrieved_log: dict[str, dict[str, list[str]]] = {}
 
-    for name in PIPELINES:
+    for name in (names or list(PIPELINES)):
         hits = 0
         lat: list[float] = []
         retrieved_log[name] = {}
@@ -193,6 +193,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--answer", type=int, default=0, help="run answer step on N questions")
     ap.add_argument("--report", action="store_true", help="write reports/baseline.md")
+    ap.add_argument("--pipelines", default="", help="comma list: bm25,dense,hybrid (default: all)")
     args = ap.parse_args()
 
     if not DB_PATH.exists():
@@ -200,7 +201,8 @@ def main() -> int:
         return 1
     questions = load_questions()
     stats = corpus_stats()
-    out = evaluate(questions)
+    names = [n.strip() for n in args.pipelines.split(",") if n.strip()] or None
+    out = evaluate(questions, names)
     m = out["metrics"]
 
     print(f"corpus: {stats['docs']} docs · {stats['chunks']} chunks · {stats['chars']:,} chars")

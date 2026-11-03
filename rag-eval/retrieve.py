@@ -75,28 +75,10 @@ def bm25(query: str, k: int = TOP_K) -> list[Hit]:
 
 
 def embed_query(query: str) -> np.ndarray:
-    import urllib.request
+    """Same provider as the document side — see embedding.py."""
+    from embedding import embed_query as _embed_query
 
-    api_key = os.environ.get("GOOGLE_API_KEY")
-    if not api_key:
-        raise SystemExit("GOOGLE_API_KEY not set")
-    url = f"{EMB['endpoint']}/{EMB['model']}:embedContent"
-    payload = {
-        "model": f"models/{EMB['model']}",
-        "content": {"parts": [{"text": query[:8000]}]},
-        "taskType": EMB["task_query"],
-        "outputDimensionality": EMB["dim"],
-    }
-    req = urllib.request.Request(
-        url,
-        data=__import__("json").dumps(payload).encode(),
-        headers={"Content-Type": "application/json", "x-goog-api-key": api_key},
-    )
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        import json
-
-        vec = json.loads(resp.read())["embedding"]["values"]
-    return np.asarray(vec, dtype=np.float32)
+    return _embed_query(query)
 
 
 def _load_matrix() -> tuple[np.ndarray, list[str]]:

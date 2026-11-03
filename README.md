@@ -12,7 +12,8 @@ rag-eval/
 ├── config.yaml          # corpus, chunking, embedder, answer model, pricing
 ├── fetch_corpus.py      # tải 7 tài liệu public → data/corpus/*.md
 ├── ingest.py            # text → section → chunk → SQLite + FTS5
-├── embed.py             # Gemini gemini-embedding-001 (768d), cache theo sha1
+├── embedding.py         # provider: fastembed (local, 384d) hoặc gemini (API, 768d)
+├── embed.py             # embed toàn bộ chunk + cache theo sha1
 ├── retrieve.py          # bm25 | dense | hybrid (RRF)
 ├── answer.py            # DeepSeek + citation bắt buộc
 ├── run_eval.py          # recall@5 · p50/p95 · cost/1000 câu
@@ -27,7 +28,9 @@ Phase sau nằm ở thư mục khác trong repo: `deploy/` (W48–W50), `poc-1..
 
 ```bash
 cd rag-eval
-export GOOGLE_API_KEY=... DEEPSEEK_API_KEY=...   # hoặc source ~/.hermes/.env
+python3 -m venv ~/.venvs/fde --system-site-packages
+~/.venvs/fde/bin/pip install fastembed          # embedding local, không cần API key
+export DEEPSEEK_API_KEY=...                     # chỉ cần cho bước answer
 
 make corpus     # tải tài liệu public (bỏ qua nếu đã có .md)
 make ingest     # → data/index.sqlite
@@ -35,6 +38,10 @@ make embed      # → vectors (cache, chạy lại không tốn)
 make eval       # → bảng recall@5 · p50/p95
 make report     # → reports/baseline.md
 ```
+
+`make` tự chọn `~/.venvs/fde/bin/python` nếu có (cần cho fastembed), ngược lại dùng `python3`.
+Embedder đổi được trong `config.yaml`: `provider: fastembed | gemini`. Mặc định là local vì
+Gemini free tier chạm quota ngày, không dùng được khi cần re-embed nhiều lần lúc thử chunking (W46).
 
 Kiểm tay một câu:
 
