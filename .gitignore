@@ -1,0 +1,8 @@
+# artifacts tái tạo được — không commit
+rag-eval/data/index.sqlite
+rag-eval/data/emb.npy
+rag-eval/data/pdf/*.pdf
+__pycache__/
+*.pyc
+.venv/
+.env

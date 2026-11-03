@@ -1,0 +1,68 @@
+{
+  "_note": "Corpus public documents — no personal data. sha256 is computed over the converted .md text; fetch_corpus.py re-downloads from `source`.",
+  "documents": [
+    {
+      "doc_id": "ai_act",
+      "title": "Regulation (EU) 2024/1689 — Artificial Intelligence Act",
+      "type": "html",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32024R1689",
+      "license": "EUR-Lex reuse (Commission Decision 2011/833/EU) — attribution required",
+      "published": "2024-07-12",
+      "chunk": "section"
+    },
+    {
+      "doc_id": "gdpr",
+      "title": "Regulation (EU) 2016/679 — General Data Protection Regulation",
+      "type": "html",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679",
+      "license": "EUR-Lex reuse (Commission Decision 2011/833/EU) — attribution required",
+      "published": "2016-05-04",
+      "chunk": "section"
+    },
+    {
+      "doc_id": "psd2",
+      "title": "Directive (EU) 2015/2366 — Payment Services Directive 2",
+      "type": "html",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32015L2366",
+      "license": "EUR-Lex reuse (Commission Decision 2011/833/EU) — attribution required",
+      "published": "2015-12-23",
+      "chunk": "section"
+    },
+    {
+      "doc_id": "eba_rts_sca",
+      "title": "Commission Delegated Regulation (EU) 2018/389 — RTS on strong customer authentication",
+      "type": "html",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32018R0389",
+      "license": "EUR-Lex reuse (Commission Decision 2011/833/EU) — attribution required",
+      "published": "2018-03-13",
+      "chunk": "section"
+    },
+    {
+      "doc_id": "nist_ai_rmf",
+      "title": "NIST AI 100-1 — Artificial Intelligence Risk Management Framework 1.0",
+      "type": "pdf",
+      "source": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf",
+      "license": "US Government work — public domain",
+      "published": "2023-01",
+      "chunk": "window"
+    },
+    {
+      "doc_id": "nist_800_63b",
+      "title": "NIST SP 800-63B — Digital Identity Guidelines: Authentication and Lifecycle Management",
+      "type": "pdf",
+      "source": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf",
+      "license": "US Government work — public domain",
+      "published": "2024-08",
+      "chunk": "section"
+    },
+    {
+      "doc_id": "basel3",
+      "title": "Basel III — Finalising post-crisis reforms (BCBS d424)",
+      "type": "pdf",
+      "source": "https://www.bis.org/bcbs/publ/d424.pdf",
+      "license": "BIS — free use with attribution",
+      "published": "2017-12",
+      "chunk": "window"
+    }
+  ]
+}

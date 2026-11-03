@@ -1,0 +1,46 @@
+# Phase 1 — RAG + evals có số đo
+# Mục đích: đo chất lượng retrieval/answer bằng số, không phải cảm nhận.
+# Xem README.md ở repo root để biết bối cảnh dự án.
+
+corpus:
+  dir: data/corpus
+  manifest: data/corpus/manifest.json
+  pdf_dir: data/pdf
+
+chunking:
+  strategy: section          # section = cắt theo Article/Chapter/Annex/mục số
+  max_chars: 3200            # ~800 token
+  overlap_chars: 400
+  min_chars: 160             # chunk ngắn hơn -> gộp vào chunk trước
+
+embedder:
+  provider: gemini
+  model: gemini-embedding-001
+  dim: 768
+  task_document: RETRIEVAL_DOCUMENT
+  task_query: RETRIEVAL_QUERY
+  batch: 64
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+
+answer:
+  provider: deepseek
+  model: deepseek-v4-flash
+  base_url: https://api.deepseek.com/v1
+  temperature: 0
+  max_tokens: 700
+
+retrieval:
+  top_k: 5
+  rrf_k: 60
+
+# Giá để tính cost /1000 câu. null = chưa cấu hình -> report in "n/a".
+# Điền từ trang pricing của provider, KHÔNG đoán.
+pricing_usd_per_1m_tokens:
+  embed: null
+  answer_in: null
+  answer_out: null
+
+paths:
+  db: data/index.sqlite
+  report: reports/baseline.md
+  questions: evals/questions.jsonl

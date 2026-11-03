@@ -1,0 +1,6 @@
+# Đã có sẵn trên VPS (Hermes runtime) — không cần cài lại:
+#   numpy 2.4.x · PyMuPDF · PyYAML
+# Không dùng: torch · faiss · sentence-transformers · langchain · llama-index
+numpy>=1.26
+PyMuPDF>=1.24
+PyYAML>=6.0

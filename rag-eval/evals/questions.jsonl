@@ -1,0 +1,5 @@
+{"id":"q001","q":"What transaction value thresholds exempt payments from strong customer authentication under the RTS?","gold":["eba_rts_sca#art10","eba_rts_sca#art11"],"type":"lookup","answerable":true}
+{"id":"q002","q":"Within how many hours must a controller notify a personal data breach to the supervisory authority?","gold":["gdpr#art33"],"type":"lookup","answerable":true}
+{"id":"q003","q":"Which categories of AI systems are classified as high-risk in Annex III?","gold":["ai_act#annex3"],"type":"list","answerable":true}
+{"id":"q004","q":"What does PSD2 say about the liability of the payer for unauthorised payment transactions?","gold":["psd2#art73","psd2#art74"],"type":"lookup","answerable":true}
+{"id":"q005","q":"What does PCI DSS v4.0 require for cryptographic key rotation?","gold":[],"type":"unanswerable","answerable":false}
