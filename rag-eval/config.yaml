@@ -12,6 +12,9 @@ chunking:
   max_chars: 3200            # ~800 token
   overlap_chars: 400
   min_chars: 160             # chunk ngắn hơn -> gộp vào chunk trước
+  # W46 — hai fix từ chẩn đoán D3/D4 của baseline W45. Tắt = quay lại hành vi v1.
+  recital_split: true        # tách từng recital thành gdpr#rec33 thay vì 1 section chung
+  annex_item_split: true     # tách Annex theo từng mục 1./2./3. -> ai_act#annex3-i1
 
 embedder:
   # fastembed = local ONNX, offline, no quota -> reproducible eval + free re-embedding

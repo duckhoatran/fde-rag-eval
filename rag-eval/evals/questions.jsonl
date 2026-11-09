@@ -3,3 +3,18 @@
 {"id":"q003","q":"Which categories of AI systems are classified as high-risk in Annex III?","gold":["ai_act#annex3"],"type":"list","answerable":true}
 {"id":"q004","q":"What does PSD2 say about the liability of the payer for unauthorised payment transactions?","gold":["psd2#art73","psd2#art74"],"type":"lookup","answerable":true}
 {"id":"q005","q":"What does PCI DSS v4.0 require for cryptographic key rotation?","gold":[],"type":"unanswerable","answerable":false}
+{"id":"q006","q":"What are the lawful bases for processing personal data?","gold":["gdpr#art6"],"type":"list","answerable":true}
+{"id":"q007","q":"When does a data subject have the right to erasure (right to be forgotten)?","gold":["gdpr#art17"],"type":"lookup","answerable":true}
+{"id":"q008","q":"What is the right to data portability and when does it apply?","gold":["gdpr#art20"],"type":"lookup","answerable":true}
+{"id":"q009","q":"When is a data protection impact assessment required?","gold":["gdpr#art35"],"type":"lookup","answerable":true}
+{"id":"q010","q":"What is the maximum administrative fine for infringing the GDPR obligations?","gold":["gdpr#art83"],"type":"lookup","answerable":true}
+{"id":"q011","q":"What rules apply to consent and withdrawal of consent for payment transactions?","gold":["psd2#art64"],"type":"lookup","answerable":true}
+{"id":"q012","q":"How must a payment service provider notify an unauthorised or incorrectly executed transaction?","gold":["psd2#art75"],"type":"lookup","answerable":true}
+{"id":"q013","q":"What does PSD2 require regarding regulatory technical standards on strong customer authentication?","gold":["psd2#art98"],"type":"lookup","answerable":true}
+{"id":"q014","q":"What elements must strong customer authentication be based on?","gold":["eba_rts_sca#art15","eba_rts_sca#art4"],"type":"list","answerable":true}
+{"id":"q015","q":"What are the thresholds and requirements for the transaction risk analysis exemption?","gold":["eba_rts_sca#art18","eba_rts_sca#art19"],"type":"lookup","answerable":true}
+{"id":"q016","q":"Which AI practices are prohibited under the AI Act?","gold":["ai_act#art5"],"type":"list","answerable":true}
+{"id":"q017","q":"What transparency obligations apply to providers of high-risk AI systems?","gold":["ai_act#art13"],"type":"lookup","answerable":true}
+{"id":"q018","q":"What obligations do deployers of high-risk AI systems have?","gold":["ai_act#art26"],"type":"lookup","answerable":true}
+{"id":"q019","q":"What access control requirements does ISO/IEC 27001 define for privileged accounts?","gold":[],"type":"unanswerable","answerable":false}
+{"id":"q020","q":"What is the maximum administrative penalty under Vietnam's Decree 13/2023 on personal data protection?","gold":[],"type":"unanswerable","answerable":false}

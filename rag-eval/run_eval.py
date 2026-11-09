@@ -32,6 +32,11 @@ PRICING = CFG["pricing_usd_per_1m_tokens"]
 TOP_K = int(CFG["retrieval"]["top_k"])
 
 
+def gold_hit(gold: list[str], sections: list[str]) -> bool:
+    """A gold section matches exactly, or as an Annex item (ai_act#annex3 -> ai_act#annex3-i2)."""
+    return any(s == g or s.startswith(g + "-i") for g in gold for s in sections)
+
+
 def load_questions() -> list[dict]:
     rows = []
     for line in QUESTIONS.read_text(encoding="utf-8").splitlines():
@@ -76,7 +81,7 @@ def evaluate(questions: list[dict], names: list[str] | None = None) -> dict:
             lat.append((time.perf_counter() - t0) * 1000)
             sections = [h.section for h in top]
             retrieved_log[name][q["id"]] = sections
-            if q.get("answerable", True) and any(g in sections for g in q.get("gold", [])):
+            if q.get("answerable", True) and gold_hit(q.get("gold", []), sections):
                 hits += 1
         results[name] = {
             "recall@5": hits / len(answerable) if answerable else 0.0,
@@ -104,11 +109,11 @@ def answer_pass(questions: list[dict], n: int) -> dict | None:
         dt = (time.perf_counter() - t0) * 1000
         tin += res.get("tokens_in") or 0
         tout += res.get("tokens_out") or 0
-        gold_hit = any(g in [h.section for h in hits] for g in q.get("gold", []))
+        gold_retrieved = gold_hit(q.get("gold", []), [h.section for h in hits])
         rows.append(
             {
                 "id": q["id"],
-                "gold_retrieved": gold_hit,
+                "gold_retrieved": gold_retrieved,
                 "cited": sorted(set(res["citations"])),
                 "ms": round(dt),
                 "answer": res["answer"].strip().replace("\n", " ")[:400],
@@ -133,10 +138,10 @@ def fmt_cost(cost) -> str:
     return "n/a (pricing not configured)" if cost is None else f"${cost:.4f}"
 
 
-def write_report(metrics: dict, ans: dict | None, stats: dict) -> None:
+def write_report(metrics: dict, ans: dict | None, stats: dict, title: str = "Baseline — Phase 1 RAG (W45)", path: Path | None = None) -> None:
     m = metrics["metrics"]
     lines = [
-        "# Baseline — Phase 1 RAG (W45)",
+        f"# {title}",
         "",
         f"- Chạy lúc: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
         f"- Commit: `{git_sha()}`",
@@ -185,8 +190,9 @@ def write_report(metrics: dict, ans: dict | None, stats: dict) -> None:
         "- Cost embedding là chi phí **một lần** khi index; cost/1000 câu ở trên chỉ tính bước answer.",
         "- Latency đo trên VPS dùng chung, gồm cả network tới API provider.",
     ]
-    REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    target = path or REPORT
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def main() -> int:
@@ -194,6 +200,8 @@ def main() -> int:
     ap.add_argument("--answer", type=int, default=0, help="run answer step on N questions")
     ap.add_argument("--report", action="store_true", help="write reports/baseline.md")
     ap.add_argument("--pipelines", default="", help="comma list: bm25,dense,hybrid (default: all)")
+    ap.add_argument("--report-to", default="", help="write report to this path instead of config paths.report")
+    ap.add_argument("--title", default="Baseline — Phase 1 RAG (W45)", help="report H1")
     args = ap.parse_args()
 
     if not DB_PATH.exists():
@@ -217,7 +225,7 @@ def main() -> int:
             qid
             for qid, secs in out["retrieved"][name].items()
             if by_id[qid].get("answerable", True)
-            and not any(g in secs for g in by_id[qid].get("gold", []))
+            and not gold_hit(by_id[qid].get("gold", []), secs)
         ]
         if misses:
             print(f"\n{name} miss: {', '.join(misses)}")
@@ -232,8 +240,9 @@ def main() -> int:
         )
 
     if args.report:
-        write_report(out, ans, stats)
-        print(f"\nreport -> {REPORT.relative_to(ROOT)}")
+        target = ROOT / args.report_to if args.report_to else None
+        write_report(out, ans, stats, title=args.title, path=target)
+        print(f"\nreport -> {(target or REPORT).relative_to(ROOT)}")
     return 0
 
 

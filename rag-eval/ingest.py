@@ -50,6 +50,12 @@ def _num(suffix: str) -> str:
 
 def _slug_one(h: str) -> tuple[str | None, int]:
     """(slug, specificity) for a single heading fragment."""
+    m = re.match(r"recital\s+(\d+)", h, re.I)
+    if m:
+        return f"rec{m.group(1)}", 2
+    m = re.match(r"(ANNEX\s+[IVXLCDM\d]+)\s+item\s+(\d+)", h, re.I)
+    if m:
+        return f"annex{_num(m.group(1).split()[-1])}-i{m.group(2)}", 3
     m = re.match(r"article\s+(\d+[a-z]?)", h, re.I)
     if m:
         return f"art{m.group(1).lower()}", 4
@@ -145,13 +151,65 @@ def window_items(text: str, doc_id: str) -> list[tuple[str, str, str]]:
     return items
 
 
+RECITAL_MARK = re.compile(r"(?m)^\((\d+)\)\s*$")
+ANNEX_ITEM = re.compile(r"(?m)^(\d+)\.\s")
+
+
+def split_recitals(sections: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    """D3 fix — EU recitals were all collapsing into one section id
+    ('...the-european-commission-'), so one source could eat the whole top-5.
+    Give every recital its own section: gdpr#rec33, psd2#rec70, ...
+    """
+    out: list[tuple[str, str]] = []
+    for heading, body in sections:
+        parts = RECITAL_MARK.split(body)
+        if len(parts) < 5:  # split() gives head + (num, text) pairs
+            out.append((heading, body))
+            continue
+        head = parts[0].strip()
+        if head:
+            out.append((heading, head))
+        for i in range(1, len(parts) - 1, 2):
+            num, text = parts[i], parts[i + 1].strip()
+            if text:
+                out.append((f"recital {num}", text))
+    return out
+
+
+def split_annex_items(sections: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    """D4 fix — an Annex is a bare list ('1. Biometrics ... 2. Critical
+    infrastructure ...'), so a question about its content ranked badly.
+    Split at numbered items and keep the annex title on every item, e.g.
+    ai_act#annex3-i1 / -i2, with the title prepended to the text.
+    """
+    out: list[tuple[str, str]] = []
+    for heading, body in sections:
+        if not heading.upper().startswith("ANNEX") or len(body) <= MAX:
+            out.append((heading, body))
+            continue
+        marks = [m.start() for m in ANNEX_ITEM.finditer(body)]
+        if len(marks) < 2:
+            out.append((heading, body))
+            continue
+        title = body[: marks[0]].strip() or heading
+        for i, start in enumerate(marks, start=1):
+            end = marks[i] if i < len(marks) else len(body)
+            item = body[start:end].strip()
+            if item:
+                out.append((f"{heading} item {i}", f"{title}\n{item}"))
+    return out
+
+
 def build() -> int:
-    if DB_PATH.exists():
-        DB_PATH.unlink()
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
+    # keep `emb` across rebuilds: embeddings are cached by sha1(chunk text), so a
+    # chunking experiment only pays for chunks whose text actually changed.
     conn.executescript(
         """
+        DROP TABLE IF EXISTS chunks_fts;
+        DROP TABLE IF EXISTS chunks;
+        DROP TABLE IF EXISTS docs;
         CREATE TABLE docs (
             doc_id TEXT PRIMARY KEY, title TEXT, license TEXT, source TEXT,
             chars INTEGER, sha256 TEXT, sections INTEGER, chunks INTEGER,
@@ -162,7 +220,7 @@ def build() -> int:
             seq INTEGER, n_chars INTEGER, text TEXT
         );
         CREATE VIRTUAL TABLE chunks_fts USING fts5(chunk_id UNINDEXED, text);
-        CREATE TABLE emb (chunk_id TEXT PRIMARY KEY, sha1 TEXT, dim INTEGER, vec BLOB);
+        CREATE TABLE IF NOT EXISTS emb (chunk_id TEXT PRIMARY KEY, sha1 TEXT, dim INTEGER, vec BLOB);
         """
     )
 
@@ -187,6 +245,12 @@ def build() -> int:
                 strategy = "window"
         else:
             sections = []
+
+        if strategy == "section":
+            if CFG["chunking"].get("recital_split", True):
+                sections = split_recitals(sections)
+            if CFG["chunking"].get("annex_item_split", True):
+                sections = split_annex_items(sections)
 
         if strategy == "window":
             items = window_items(text, doc_id)
