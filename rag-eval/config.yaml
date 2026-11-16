@@ -34,7 +34,10 @@ answer:
   model: deepseek-v4-flash
   base_url: https://api.deepseek.com/v1
   temperature: 0
-  max_tokens: 700
+  # W47: 700 was silently truncating — deepseek-v4-flash spends the budget on
+  # reasoning first, so 18/116 answers came back as an empty string at exactly
+  # 700 completion tokens. Keep headroom above the reasoning cost.
+  max_tokens: 2000
 
 retrieval:
   top_k: 5

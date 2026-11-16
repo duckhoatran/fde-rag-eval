@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Answer step: retrieved chunks -> grounded answer with mandatory citations.
 
-Guardrails applied from the first commit (they become the W47 measurement):
-  * answer only from context
-  * every claim must cite [chunk_id]
-  * if context is insufficient -> say "insufficient evidence", never guess
+Two prompt arms live in guardrails.py — "guarded" (W47 policy: citations,
+refusal, instruction hierarchy) and "naive" (the W45/W46 behaviour, used as the
+before-number in reports/w47-guardrails.md).
 
 CLI:  python3 answer.py "Within how many hours must a breach be notified?"
+      python3 answer.py --naive "Within how many hours must a breach be notified?"
 """
 from __future__ import annotations
 
@@ -18,20 +18,18 @@ from pathlib import Path
 
 import yaml
 
+from guardrails import SYSTEMS
+
 ROOT = Path(__file__).resolve().parent
 CFG = yaml.safe_load((ROOT / "config.yaml").read_text())
 ANS = CFG["answer"]
 
-SYSTEM = (
-    "You are a compliance research assistant. Answer ONLY from the provided context. "
-    "Every factual sentence must end with a citation to the chunk it came from, in the form [chunk_id]. "
-    "If the context does not contain the answer, reply exactly: "
-    "'insufficient evidence' and list what is missing. Never use outside knowledge."
-)
 
-
-def build_context(hits, max_chars: int = 14000) -> str:
+def build_context(hits, max_chars: int = 14000, extra: str | None = None) -> str:
     parts, used = [], 0
+    if extra:  # W47 injection arm: a "document" carrying hostile instructions
+        parts.append(extra)
+        used += len(extra)
     for h in hits:
         block = f"[{h.chunk_id}] ({h.heading})\n{h.text}\n"
         if used + len(block) > max_chars:
@@ -41,7 +39,7 @@ def build_context(hits, max_chars: int = 14000) -> str:
     return "\n".join(parts)
 
 
-def ask(question: str, hits) -> dict:
+def ask(question: str, hits, mode: str = "guarded", poison: str | None = None) -> dict:
     api_key = os.environ.get("DEEPSEEK_API_KEY")
     if not api_key:
         raise SystemExit("DEEPSEEK_API_KEY not set (source ~/.hermes/.env)")
@@ -50,10 +48,10 @@ def ask(question: str, hits) -> dict:
         "temperature": ANS["temperature"],
         "max_tokens": ANS["max_tokens"],
         "messages": [
-            {"role": "system", "content": SYSTEM},
+            {"role": "system", "content": SYSTEMS[mode]},
             {
                 "role": "user",
-                "content": f"Question: {question}\n\nContext:\n{build_context(hits)}",
+                "content": f"Question: {question}\n\nContext:\n{build_context(hits, extra=poison)}",
             },
         ],
     }
@@ -77,11 +75,16 @@ def ask(question: str, hits) -> dict:
 if __name__ == "__main__":
     from retrieve import search
 
-    if len(sys.argv) < 2:
+    args = sys.argv[1:]
+    mode = "guarded"
+    if args and args[0] == "--naive":
+        mode = "naive"
+        args = args[1:]
+    if not args:
         raise SystemExit('usage: python3 answer.py "question"')
-    q = " ".join(sys.argv[1:])
+    q = " ".join(args)
     hits = search("hybrid", q)
-    result = ask(q, hits)
+    result = ask(q, hits, mode=mode)
     print(result["answer"])
     print(f"\n--- tokens in/out: {result['tokens_in']}/{result['tokens_out']}")
     print(f"--- citations: {sorted(set(result['citations']))}")

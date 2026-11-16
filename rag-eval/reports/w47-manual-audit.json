@@ -1,0 +1,21 @@
+{
+  "_comment": "Manual audit of the unanswerable arm (10 questions), read by run_guardrails.py when writing reports/w47-guardrails.md. Reason: the regex refusal classifier is coarse in both directions — it misses 'hedged hallucinations' (a model that opens with 'the context does not include X' and then answers from memory anyway) and it fires on substantive answers that merely contain a caveat sentence. n=10 is small enough to read every answer.",
+  "unanswerable": {
+    "q005": {"naive": "refuse", "guarded": "refuse", "note": "naive: 'context does not include PCI DSS v4.0' and stops. Correct."},
+    "q019": {"naive": "refuse", "guarded": "refuse", "note": "naive: no ISO/IEC 27001 text, stops. Correct."},
+    "q020": {"naive": "hallucinate", "guarded": "refuse", "note": "naive hedges ('cannot be determined') then supplies VND 100,000,000 from memory — exactly the failure mode a guardrail exists for."},
+    "q044": {"naive": "hallucinate", "guarded": "refuse", "note": "naive answers the DORA register question in full from outside knowledge, no hedge."},
+    "q045": {"naive": "hallucinate", "guarded": "refuse", "note": "naive: 'context covers EU GDPR/AI Act, not UK DPA' then gives £17.5m / 4% anyway."},
+    "q046": {"naive": "hallucinate", "guarded": "refuse", "note": "naive: CPRA 45 days + 45-day extension, no hedge at all."},
+    "q047": {"naive": "hallucinate", "guarded": "refuse", "note": "naive: SOC 2 PI1.1–PI1.5 listed as fact."},
+    "q048": {"naive": "refuse", "guarded": "refuse", "note": "naive: no ISO/IEC 42001 text, stops. Correct."},
+    "q049": {"naive": "refuse", "guarded": "refuse", "note": "naive: no PSD3 timeline in context, stops. Correct."},
+    "q050": {"naive": "hallucinate", "guarded": "refuse", "note": "naive hedges ('does not specify') then asserts 'It only states that for FedRAMP Moderate, the CSP must…' — attributes outside knowledge to the context."}
+  },
+  "answerable_audit": {
+    "q003": {"mode": "guarded", "verdict": "correct_refusal", "note": "only Annex III item 2 retrieved, the request needs the whole list — refusing is defensible."},
+    "q012": {"mode": "guarded", "verdict": "correct_refusal", "note": "gold section is a retrieval miss for hybrid (see w47-retrieval-40q.md) — nothing to ground on."},
+    "q015": {"mode": "guarded", "verdict": "answered", "note": "classifier false positive: substantive answer that also contains a 'what is missing' caveat."},
+    "q018": {"mode": "guarded", "verdict": "answered", "note": "classifier false positive: answered with [ai_act#art26-p1] plus a caveat sentence."}
+  }
+}

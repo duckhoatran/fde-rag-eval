@@ -1,20 +1,50 @@
-{"id":"q001","q":"What transaction value thresholds exempt payments from strong customer authentication under the RTS?","gold":["eba_rts_sca#art10","eba_rts_sca#art11"],"type":"lookup","answerable":true}
-{"id":"q002","q":"Within how many hours must a controller notify a personal data breach to the supervisory authority?","gold":["gdpr#art33"],"type":"lookup","answerable":true}
-{"id":"q003","q":"Which categories of AI systems are classified as high-risk in Annex III?","gold":["ai_act#annex3"],"type":"list","answerable":true}
-{"id":"q004","q":"What does PSD2 say about the liability of the payer for unauthorised payment transactions?","gold":["psd2#art73","psd2#art74"],"type":"lookup","answerable":true}
-{"id":"q005","q":"What does PCI DSS v4.0 require for cryptographic key rotation?","gold":[],"type":"unanswerable","answerable":false}
-{"id":"q006","q":"What are the lawful bases for processing personal data?","gold":["gdpr#art6"],"type":"list","answerable":true}
-{"id":"q007","q":"When does a data subject have the right to erasure (right to be forgotten)?","gold":["gdpr#art17"],"type":"lookup","answerable":true}
-{"id":"q008","q":"What is the right to data portability and when does it apply?","gold":["gdpr#art20"],"type":"lookup","answerable":true}
-{"id":"q009","q":"When is a data protection impact assessment required?","gold":["gdpr#art35"],"type":"lookup","answerable":true}
-{"id":"q010","q":"What is the maximum administrative fine for infringing the GDPR obligations?","gold":["gdpr#art83"],"type":"lookup","answerable":true}
-{"id":"q011","q":"What rules apply to consent and withdrawal of consent for payment transactions?","gold":["psd2#art64"],"type":"lookup","answerable":true}
-{"id":"q012","q":"How must a payment service provider notify an unauthorised or incorrectly executed transaction?","gold":["psd2#art75"],"type":"lookup","answerable":true}
-{"id":"q013","q":"What does PSD2 require regarding regulatory technical standards on strong customer authentication?","gold":["psd2#art98"],"type":"lookup","answerable":true}
-{"id":"q014","q":"What elements must strong customer authentication be based on?","gold":["eba_rts_sca#art15","eba_rts_sca#art4"],"type":"list","answerable":true}
-{"id":"q015","q":"What are the thresholds and requirements for the transaction risk analysis exemption?","gold":["eba_rts_sca#art18","eba_rts_sca#art19"],"type":"lookup","answerable":true}
-{"id":"q016","q":"Which AI practices are prohibited under the AI Act?","gold":["ai_act#art5"],"type":"list","answerable":true}
-{"id":"q017","q":"What transparency obligations apply to providers of high-risk AI systems?","gold":["ai_act#art13"],"type":"lookup","answerable":true}
-{"id":"q018","q":"What obligations do deployers of high-risk AI systems have?","gold":["ai_act#art26"],"type":"lookup","answerable":true}
-{"id":"q019","q":"What access control requirements does ISO/IEC 27001 define for privileged accounts?","gold":[],"type":"unanswerable","answerable":false}
-{"id":"q020","q":"What is the maximum administrative penalty under Vietnam's Decree 13/2023 on personal data protection?","gold":[],"type":"unanswerable","answerable":false}
+{"id": "q001", "q": "What transaction value thresholds exempt payments from strong customer authentication under the RTS?", "gold": ["eba_rts_sca#art10", "eba_rts_sca#art11"], "type": "lookup", "answerable": true}
+{"id": "q002", "q": "Within how many hours must a controller notify a personal data breach to the supervisory authority?", "gold": ["gdpr#art33"], "type": "lookup", "answerable": true}
+{"id": "q003", "q": "Which categories of AI systems are classified as high-risk in Annex III?", "gold": ["ai_act#annex3"], "type": "list", "answerable": true}
+{"id": "q004", "q": "What does PSD2 say about the liability of the payer for unauthorised payment transactions?", "gold": ["psd2#art73", "psd2#art74"], "type": "lookup", "answerable": true}
+{"id": "q005", "q": "What does PCI DSS v4.0 require for cryptographic key rotation?", "gold": [], "type": "unanswerable", "answerable": false}
+{"id": "q006", "q": "What are the lawful bases for processing personal data?", "gold": ["gdpr#art6"], "type": "list", "answerable": true}
+{"id": "q007", "q": "When does a data subject have the right to erasure (right to be forgotten)?", "gold": ["gdpr#art17"], "type": "lookup", "answerable": true}
+{"id": "q008", "q": "What is the right to data portability and when does it apply?", "gold": ["gdpr#art20"], "type": "lookup", "answerable": true}
+{"id": "q009", "q": "When is a data protection impact assessment required?", "gold": ["gdpr#art35"], "type": "lookup", "answerable": true}
+{"id": "q010", "q": "What is the maximum administrative fine for infringing the GDPR obligations?", "gold": ["gdpr#art83"], "type": "lookup", "answerable": true}
+{"id": "q011", "q": "What rules apply to consent and withdrawal of consent for payment transactions?", "gold": ["psd2#art64"], "type": "lookup", "answerable": true}
+{"id": "q012", "q": "How must a payment service provider notify an unauthorised or incorrectly executed transaction?", "gold": ["psd2#art75"], "type": "lookup", "answerable": true}
+{"id": "q013", "q": "What does PSD2 require regarding regulatory technical standards on strong customer authentication?", "gold": ["psd2#art98"], "type": "lookup", "answerable": true}
+{"id": "q014", "q": "What elements must strong customer authentication be based on?", "gold": ["eba_rts_sca#art15", "eba_rts_sca#art4"], "type": "list", "answerable": true}
+{"id": "q015", "q": "What are the thresholds and requirements for the transaction risk analysis exemption?", "gold": ["eba_rts_sca#art18", "eba_rts_sca#art19"], "type": "lookup", "answerable": true}
+{"id": "q016", "q": "Which AI practices are prohibited under the AI Act?", "gold": ["ai_act#art5"], "type": "list", "answerable": true}
+{"id": "q017", "q": "What transparency obligations apply to providers of high-risk AI systems?", "gold": ["ai_act#art13"], "type": "lookup", "answerable": true}
+{"id": "q018", "q": "What obligations do deployers of high-risk AI systems have?", "gold": ["ai_act#art26"], "type": "lookup", "answerable": true}
+{"id": "q019", "q": "What access control requirements does ISO/IEC 27001 define for privileged accounts?", "gold": [], "type": "unanswerable", "answerable": false}
+{"id": "q020", "q": "What is the maximum administrative penalty under Vietnam's Decree 13/2023 on personal data protection?", "gold": [], "type": "unanswerable", "answerable": false}
+{"id": "q021", "q": "Which legal grounds can make the processing of personal data lawful under the GDPR?", "gold": ["gdpr#art6"], "type": "list", "answerable": true}
+{"id": "q022", "q": "Which categories of personal data are treated as special categories requiring a separate legal basis?", "gold": ["gdpr#art9"], "type": "list", "answerable": true}
+{"id": "q023", "q": "What information must a controller provide to a data subject who exercises the right of access?", "gold": ["gdpr#art15"], "type": "list", "answerable": true}
+{"id": "q024", "q": "On which grounds must a controller erase personal data without undue delay?", "gold": ["gdpr#art17"], "type": "list", "answerable": true}
+{"id": "q025", "q": "When may a decision based solely on automated processing, including profiling, be applied to a data subject?", "gold": ["gdpr#art22"], "type": "lookup", "answerable": true}
+{"id": "q026", "q": "What guarantees must a controller require from a processor before engaging it?", "gold": ["gdpr#art28"], "type": "lookup", "answerable": true}
+{"id": "q027", "q": "When is a controller required to carry out a data protection impact assessment?", "gold": ["gdpr#art35"], "type": "lookup", "answerable": true}
+{"id": "q028", "q": "What is the maximum administrative fine for the most serious infringements of the GDPR?", "gold": ["gdpr#art83"], "type": "lookup", "answerable": true}
+{"id": "q029", "q": "Which two cumulative conditions make an AI system high-risk under Article 6 of the AI Act?", "gold": ["ai_act#art6"], "type": "list", "answerable": true}
+{"id": "q030", "q": "What properties must a risk management system have for a high-risk AI system over its lifecycle?", "gold": ["ai_act#art9"], "type": "lookup", "answerable": true}
+{"id": "q031", "q": "What requirements apply to training, validation and testing data sets used by high-risk AI systems?", "gold": ["ai_act#art10"], "type": "list", "answerable": true}
+{"id": "q032", "q": "What logging capability must a high-risk AI system provide and what must the logs enable?", "gold": ["ai_act#art12"], "type": "list", "answerable": true}
+{"id": "q033", "q": "What must human oversight of a high-risk AI system aim to achieve?", "gold": ["ai_act#art14"], "type": "lookup", "answerable": true}
+{"id": "q034", "q": "When must users be informed that they are interacting with an AI system?", "gold": ["ai_act#art50"], "type": "lookup", "answerable": true}
+{"id": "q035", "q": "What measures must payment service providers adopt for the possession elements used in strong customer authentication?", "gold": ["eba_rts_sca#art7"], "type": "lookup", "answerable": true}
+{"id": "q036", "q": "When must strong customer authentication be applied to a list of trusted beneficiaries?", "gold": ["eba_rts_sca#art13"], "type": "lookup", "answerable": true}
+{"id": "q037", "q": "Under which conditions may payment service providers exempt corporate payment processes from strong customer authentication?", "gold": ["eba_rts_sca#art17"], "type": "lookup", "answerable": true}
+{"id": "q038", "q": "Which documents must accompany an application for authorisation as a payment institution?", "gold": ["psd2#art5"], "type": "list", "answerable": true}
+{"id": "q039", "q": "By which methods must payment institutions calculate their own funds?", "gold": ["psd2#art9"], "type": "list", "answerable": true}
+{"id": "q040", "q": "May a payment service provider charge the user for information provided under the transparency title?", "gold": ["psd2#art40"], "type": "lookup", "answerable": true}
+{"id": "q041", "q": "Which authenticator types are permitted for AAL1 authentication?", "gold": ["nist_800_63b#sec4-1-1"], "type": "list", "answerable": true}
+{"id": "q042", "q": "What level of complexity and secrecy does NIST SP 800-63B require of memorized secrets?", "gold": ["nist_800_63b#sec5-1-1"], "type": "lookup", "answerable": true}
+{"id": "q043", "q": "What must a credential service provider do when a subscriber reports a lost or stolen authenticator?", "gold": ["nist_800_63b#sec5-2-1"], "type": "lookup", "answerable": true}
+{"id": "q044", "q": "What does DORA require financial entities to maintain in the register of information on ICT third-party arrangements?", "gold": [], "type": "unanswerable", "answerable": false}
+{"id": "q045", "q": "What is the maximum administrative fine under the UK Data Protection Act 2018?", "gold": [], "type": "unanswerable", "answerable": false}
+{"id": "q046", "q": "How many days does the CPRA give a business to respond to a consumer access request?", "gold": [], "type": "unanswerable", "answerable": false}
+{"id": "q047", "q": "Which SOC 2 Trust Services Criteria cover processing integrity evidence?", "gold": [], "type": "unanswerable", "answerable": false}
+{"id": "q048", "q": "What controls does ISO/IEC 42001 require for AI incident response?", "gold": [], "type": "unanswerable", "answerable": false}
+{"id": "q049", "q": "What is the timeline for PSD3 to replace PSD2 and the Payment Services Regulation?", "gold": [], "type": "unanswerable", "answerable": false}
+{"id": "q050", "q": "What does FedRAMP Moderate require for continuous monitoring deliverables?", "gold": [], "type": "unanswerable", "answerable": false}

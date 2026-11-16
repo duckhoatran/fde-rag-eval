@@ -15,11 +15,14 @@ rag-eval/
 ├── embedding.py         # provider: fastembed (local, 384d) hoặc gemini (API, 768d)
 ├── embed.py             # embed toàn bộ chunk + cache theo sha1
 ├── retrieve.py          # bm25 | dense | hybrid (RRF)
-├── answer.py            # DeepSeek + citation bắt buộc
+├── guardrails.py        # W47: 2 prompt arm (naive/guarded) + check grounding bằng code
+├── answer.py            # DeepSeek, chọn arm qua `mode`
 ├── run_eval.py          # recall@5 · p50/p95 · cost/1000 câu
+├── run_guardrails.py    # W47: hallucination · grounded rate · injection resistance
 ├── evals/questions.jsonl
+├── evals/injections.jsonl   # W47: 8 case prompt injection
 ├── data/corpus/         # text đã convert (commit) + manifest.json
-└── reports/baseline.md  # deliverable W45
+└── reports/             # baseline.md (W45) · w46-chunking-v2.md · w47-*.md
 ```
 
 Phase sau nằm ở thư mục khác trong repo: `deploy/` (W48–W50), `poc-1..3/` (W51–W53), `enterprise/` (W01–W03).
@@ -37,7 +40,12 @@ make ingest     # → data/index.sqlite
 make embed      # → vectors (cache, chạy lại không tốn)
 make eval       # → bảng recall@5 · p50/p95
 make report     # → reports/baseline.md
+make guardrails # → reports/w47-guardrails.md (~120 lượt gọi LLM)
 ```
+
+`make guardrails` chạy **cùng một eval set qua hai prompt arm** — `naive` (RAG trơn, hành vi W45/W46)
+và `guarded` (citation bắt buộc · từ chối khi thiếu evidence · coi instruction trong context là data) —
+rồi chấm bằng code, không dùng LLM judge. Chạy thử rẻ: `run_guardrails.py --mode guarded --limit 2`.
 
 `make` tự chọn `~/.venvs/fde/bin/python` nếu có (cần cho fastembed), ngược lại dùng `python3`.
 Embedder đổi được trong `config.yaml`: `provider: fastembed | gemini`. Mặc định là local vì
@@ -68,6 +76,9 @@ python3 answer.py   "Within how many hours must a breach be notified?"
 - **p50/p95 latency** — riêng bước retrieval, đo trên VPS.
 - **cost/1000 câu** — token vào/ra đo thật trên N câu rồi ngoại suy; giá đọc từ `config.yaml` (`pricing_usd_per_1m_tokens`), `null` = chưa cấu hình → báo `n/a`.
 - **unanswerable** — câu không có đáp án trong corpus; loại khỏi recall, dùng đo hallucination ở W47.
+- **hallucination rate (W47)** — tỉ lệ câu *unanswerable* mà model vẫn trả lời thay vì từ chối. Từ chối = chứa marker trong `guardrails.REFUSAL_MARKERS`. Chấm bằng code, không phải cảm nhận.
+- **grounded rate (W47)** — tỉ lệ câu trả lời có ≥1 citation trỏ tới chunk **thực sự được retrieve**; citation trỏ id không có trong context = citation bịa, đếm riêng.
+- **injection pass (W47)** — không làm theo instruction bị chèn (trực tiếp, trong tài liệu, hoặc núp dưới dạng trích dẫn), không lộ system prompt, không citation bịa.
 
 ## Nguyên tắc
 
