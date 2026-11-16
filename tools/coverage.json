@@ -1,0 +1,92 @@
+{
+  "_rubric": "coverage: 1 = có artifact/kết quả đo được trong repo hoặc hệ thống đang chạy · 0.5 = có kỹ năng/kinh nghiệm nhưng không có artifact để chỉ ra · 0 = không có. Trọng số = % JD FDE đo trên corpus tương ứng bằng cùng một bộ regex (analyze_fde_demand.py). Readiness = Σ(w×coverage)/Σw.",
+  "_excluded": {
+    "Travel required": "điều kiện công việc, không phải năng lực cần bằng chứng — tính vào nó là tự thưởng điểm"
+  },
+  "buckets": {
+    "Customer-facing / discovery": {
+      "baseline": {"coverage": 1, "evidence": "8 năm BA: discovery, stakeholder, scoping là công việc hằng ngày"},
+      "now": {"coverage": 1, "evidence": "không đổi — vẫn là điểm mạnh nhất (72% JD)"}
+    },
+    "Python": {
+      "baseline": {"coverage": 1, "evidence": "script/tooling trong công việc BA-delivery"},
+      "now": {"coverage": 1, "evidence": "rag-eval/: ingest, embed, retrieve, eval harness, run_guardrails.py"}
+    },
+    "Pre-sales / demo": {
+      "baseline": {"coverage": 0.5, "evidence": "kể được câu chuyện domain, chưa có PoC/demo artifact"},
+      "now": {"coverage": 0.5, "evidence": "REPORT.md + DEMO.md đã có, video demo chưa quay → giữ 0.5, không tự nâng"}
+    },
+    "AI agents / MCP / tooling": {
+      "baseline": {"coverage": 0, "evidence": "chưa có gì"},
+      "now": {"coverage": 0.5, "evidence": "vận hành Hermes agent (skills/cron/MCP tools) hằng ngày nhưng chưa có artifact ship được"}
+    },
+    "Ownership / ambiguous problems": {
+      "baseline": {"coverage": 0.5, "evidence": "có delivery 0→1 nhưng không có bằng chứng công khai"},
+      "now": {"coverage": 0.5, "evidence": "FDE lab 0→1 có DoD + lịch sử commit; vẫn không tự nâng lên 1 khi chưa có người dùng thật"}
+    },
+    "REST/GraphQL API": {
+      "baseline": {"coverage": 1, "evidence": "tích hợp payment/partner API trong dự án NAB"},
+      "now": {"coverage": 1, "evidence": "không đổi"}
+    },
+    "Code review / mentoring": {
+      "baseline": {"coverage": 0.5, "evidence": "review tài liệu/đặc tả là chính, chưa review code quy mô"},
+      "now": {"coverage": 0.5, "evidence": "không đổi"}
+    },
+    "LLM / RAG": {
+      "baseline": {"coverage": 0.5, "evidence": "hiểu khái niệm, chưa có hệ thống chạy được"},
+      "now": {"coverage": 1, "evidence": "rag-eval/: 1.686 chunk, recall@5 0,82, hallucination 60%→0%, REPORT.md"}
+    },
+    "Cloud (AWS/GCP/Azure)": {
+      "baseline": {"coverage": 0.5, "evidence": "deploy Cloudflare Pages (3 app) — không phải AWS/GCP/Azure"},
+      "now": {"coverage": 0.5, "evidence": "không đổi; Phase 2 (W48–W50) mới đóng phần này"}
+    },
+    "JavaScript/TypeScript": {
+      "baseline": {"coverage": 1, "evidence": "Duck Farm Clicker + 2 web app đã live trên CF Pages"},
+      "now": {"coverage": 1, "evidence": "không đổi"}
+    },
+    "Async / writing": {
+      "baseline": {"coverage": 1, "evidence": "đặc tả, tài liệu nghiệp vụ, vault"},
+      "now": {"coverage": 1, "evidence": "REPORT.md EN 1 trang, DEMO.md, 3 report có số"}
+    },
+    "SQL / data modelling": {
+      "baseline": {"coverage": 1, "evidence": "mô hình dữ liệu trong công việc BA"},
+      "now": {"coverage": 1, "evidence": "schema SQLite + FTS5 trong rag-eval/ingest.py"}
+    },
+    "Data engineering (ETL/warehouse)": {
+      "baseline": {"coverage": 0.5, "evidence": "luồng dữ liệu nhỏ, chưa có pipeline production"},
+      "now": {"coverage": 0.5, "evidence": "ingest→embed→index là pipeline thật nhưng chỉ 1.686 chunk"}
+    },
+    "CI/CD": {
+      "baseline": {"coverage": 0, "evidence": "chưa có"},
+      "now": {"coverage": 0, "evidence": "chưa có — W49"}
+    },
+    "Linux / shell": {
+      "baseline": {"coverage": 1, "evidence": "quản trị VPS, cron, rclone"},
+      "now": {"coverage": 1, "evidence": "không đổi"}
+    },
+    "Kubernetes": {
+      "baseline": {"coverage": 0, "evidence": "chưa có"},
+      "now": {"coverage": 0, "evidence": "chưa có — không nằm trong Phase 2 bắt buộc"}
+    },
+    "Terraform / IaC": {
+      "baseline": {"coverage": 0, "evidence": "chưa có"},
+      "now": {"coverage": 0, "evidence": "chưa có — W50"}
+    },
+    "Networking/security (SSO, VPC, IAM)": {
+      "baseline": {"coverage": 0.5, "evidence": "BA cho dự án bảo mật/thanh toán — hiểu yêu cầu, chưa tự triển khai"},
+      "now": {"coverage": 0.5, "evidence": "không đổi — Phase 4 (W01–W03)"}
+    },
+    "Docker": {
+      "baseline": {"coverage": 0, "evidence": "chưa có"},
+      "now": {"coverage": 0, "evidence": "chưa có — W48"}
+    },
+    "Enterprise deployment (on-prem/air-gapped)": {
+      "baseline": {"coverage": 0, "evidence": "chưa có"},
+      "now": {"coverage": 0, "evidence": "chưa có — W02"}
+    },
+    "Data viz / BI": {
+      "baseline": {"coverage": 0.5, "evidence": "dashboard nghiệp vụ có dùng nhưng không phải kỹ năng chính"},
+      "now": {"coverage": 0.5, "evidence": "không đổi"}
+    }
+  }
+}
