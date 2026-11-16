@@ -14,7 +14,7 @@
     },
     "Pre-sales / demo": {
       "baseline": {"coverage": 0.5, "evidence": "kể được câu chuyện domain, chưa có PoC/demo artifact"},
-      "now": {"coverage": 0.5, "evidence": "REPORT.md + DEMO.md đã có, video demo chưa quay → giữ 0.5, không tự nâng"}
+      "now": {"coverage": 1, "evidence": "`demo/w47-demo.mp4` — demo 2:26, terminal chạy thật + narration + caption; script: `DEMO.md`"}
     },
     "AI agents / MCP / tooling": {
       "baseline": {"coverage": 0, "evidence": "chưa có gì"},

@@ -3,6 +3,16 @@
 The video itself is recorded by hand (screen + voice); this file exists so the recording is one take, not
 an improvisation. Total: 3 min, 5 blocks. Every command is copy-paste and works from a clean shell.
 
+## Status (16/11/2026)
+
+**Recorded, generated headlessly:** `demo/w47-demo.mp4` — 2:26, 1600×900, every terminal line produced by
+actually running the commands below (`/tmp/demo/capture.json`), narration synthesised with Gemini TTS
+(voice `Kore`), English captions burned in, `ffmpeg` H.264 + AAC, 2.8 MB.
+
+Rebuild with `python3 /tmp/demo/{capture,tts,render}.py` (capture → narration → frames + mux). Honest caveat:
+**the voice is synthetic, not K T's**. For an application video where the voice matters, re-record with a
+real microphone using the same 5 blocks — the script below is the shot list.
+
 ```bash
 cd ~/fde-lab/rag-eval
 set -a && source ~/.hermes/.env && set +a
